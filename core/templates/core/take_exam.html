@@ -1,0 +1,76 @@
+<h2>{{ exam.title }}</h2>
+
+<h3>Time Remaining: <span id="timer"></span></h3>
+
+<script>
+    let timeLeft = {{ exam.duration_minutes }} * 60;
+
+    function updateTimer() {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+
+        document.getElementById("timer").innerHTML =
+            minutes + "m " + seconds + "s";
+
+        if (timeLeft <= 0) {
+            alert("Time is up! Submitting exam.");
+            document.getElementById("examForm").submit();
+        }
+
+        timeLeft--;
+    }
+
+    setInterval(updateTimer, 1000);
+</script>
+
+<h2>{{ exam.title }}</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+{% for question in questions %}
+
+<div>
+
+<p>{{ forloop.counter }}. {{ question.question_text }}</p>
+
+<label>
+<input type="radio" name="{{ question.id }}" value="A">
+{{ question.option_a }}
+</label>
+
+<br>
+
+<label>
+<input type="radio" name="{{ question.id }}" value="B">
+{{ question.option_b }}
+</label>
+
+<br>
+
+<label>
+<input type="radio" name="{{ question.id }}" value="C">
+{{ question.option_c }}
+</label>
+
+<br>
+
+<label>
+<input type="radio" name="{{ question.id }}" value="D">
+{{ question.option_d }}
+</label>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+<button type="submit">
+
+Submit Exam
+
+</button>
+
+</form>

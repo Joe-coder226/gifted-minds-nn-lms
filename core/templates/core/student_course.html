@@ -1,0 +1,79 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<h1>{{ course.title }}</h1>
+<p>{{ course.description }}</p>
+
+<hr>
+
+<h2>📺 Videos</h2>
+
+{% for video in videos %}
+<div style="margin-bottom:10px">
+
+<strong>{{ video.title }}</strong>
+
+<a href="{% url 'watch_video' video.id %}">
+<button>Watch Video</button>
+</a>
+
+</div>
+{% empty %}
+<p>No videos available.</p>
+{% endfor %}
+
+<hr>
+
+<h2>📚 Course Notes</h2>
+
+{% for material in materials %}
+<div style="margin-bottom:10px">
+
+<strong>{{ material.title }}</strong>
+
+<a href="{% url 'view_material' material.id %}">
+<button>Open Notes</button>
+</a>
+
+</div>
+{% empty %}
+<p>No materials uploaded.</p>
+{% endfor %}
+
+<hr>
+
+<h2>📝 Exams</h2>
+
+{% for exam in exams %}
+<div style="margin-bottom:10px">
+
+<strong>{{ exam.title }}</strong>
+
+<a href="{% url 'take_exam' exam.id %}">
+<button>Take Exam</button>
+</a>
+
+</div>
+{% empty %}
+<p>No exams available.</p>
+{% endfor %}
+
+<hr>
+
+<h2>🔴 Live Classes</h2>
+
+{% for session in live_sessions %}
+<div style="margin-bottom:10px">
+
+<strong>{{ session.title }}</strong>
+
+<a href="{% url 'join_live_class' session.id %}">
+<button>Join Live Class</button>
+</a>
+
+</div>
+{% empty %}
+<p>No live classes running.</p>
+{% endfor %}
+
+{% endblock %}

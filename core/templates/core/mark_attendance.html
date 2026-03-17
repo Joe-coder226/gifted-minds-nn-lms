@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+        <h4 class="fw-bold mb-4">
+            Attendance for {{ session.course.title }}
+        </h4>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Present</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in attendance_records %}
+                    <tr>
+                        <td>{{ record.student.username }}</td>
+                        <td>
+                            <input type="checkbox" name="{{ record.id }}">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-primary">
+                Save Attendance
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Course</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#f4f6f9;
+            padding:40px;
+        }
+
+        .container{
+            width:500px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:8px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2{
+            text-align:center;
+        }
+
+        input, textarea, select{
+            width:100%;
+            padding:10px;
+            margin-top:8px;
+            margin-bottom:15px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2c7be5;
+            border:none;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#1a68d1;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Create Course</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Course Title</label>
+    <input type="text" name="title" required>
+
+    <label>Description</label>
+    <textarea name="description" required></textarea>
+
+    <label>Level</label>
+    <select name="level" required>
+        <option value="">Select Level</option>
+        {% for level in levels %}
+        <option value="{{ level.id }}">{{ level.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Grade</label>
+    <select name="grade" required>
+        <option value="">Select Grade</option>
+        {% for grade in grades %}
+        <option value="{{ grade.id }}">{{ grade.name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Create Course</button>
+
+</form>
+
+
+</div>
+
+</body>
+</html>

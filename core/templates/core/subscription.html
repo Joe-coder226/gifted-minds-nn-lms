@@ -1,0 +1,76 @@
+<form method="POST">
+{% csrf_token %}
+
+<!-- LEVEL -->
+
+<div class="mb-3">
+
+<label>Level</label>
+
+<select name="level" id="levelSelect" class="form-control" required>
+
+<option value="">Select Level</option>
+
+{% for level in levels %}
+<option value="{{ level.id }}">
+{{ level.name }} - Ksh {{ level.price }}
+</option>
+{% endfor %}
+
+</select>
+
+</div>
+
+
+<!-- CLASS -->
+
+<div class="mb-3">
+
+<label>Class</label>
+
+<select name="student_class" id="gradeSelect" class="form-control" required>
+
+<option value="">Select Class</option>
+
+{% for grade in grades %}
+<option value="{{ grade.id }}" data-level="{{ grade.level.id }}">
+{{ grade.name }}
+</option>
+{% endfor %}
+
+</select>
+
+</div>
+
+
+<button type="submit" class="btn btn-success">
+Activate Subscription
+</button>
+
+</form>
+<script>
+
+const levelSelect = document.getElementById("levelSelect");
+const gradeSelect = document.getElementById("gradeSelect");
+
+levelSelect.addEventListener("change", function() {
+
+    let selectedLevel = this.value;
+
+    for (let option of gradeSelect.options) {
+
+        let level = option.getAttribute("data-level");
+
+        if (!level || level === selectedLevel) {
+            option.style.display = "block";
+        } else {
+            option.style.display = "none";
+        }
+
+    }
+
+    gradeSelect.value = "";
+
+});
+
+</script>

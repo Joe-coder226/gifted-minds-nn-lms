@@ -1,0 +1,32 @@
+<h2>Add Question - {{ exam.title }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>Question:</p>
+    <textarea name="question_text" required></textarea>
+
+    <p>Option A:</p>
+    <input type="text" name="option_a" required>
+
+    <p>Option B:</p>
+    <input type="text" name="option_b" required>
+
+    <p>Option C:</p>
+    <input type="text" name="option_c" required>
+
+    <p>Option D:</p>
+    <input type="text" name="option_d" required>
+
+    <p>Correct Answer:</p>
+    <select name="correct_answer">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Save Question</button>
+</form>

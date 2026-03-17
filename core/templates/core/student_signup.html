@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card shadow-lg p-4 mt-5">
+            <h3 class="text-center mb-4 fw-bold">Student Registration</h3>
+
+            {% for message in messages %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Register
+                </button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'login' %}">Already have an account?</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

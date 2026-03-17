@@ -1,0 +1,25 @@
+<h2>Complete Payment</h2>
+
+<p>Level: {{ subscription.level.name }}</p>
+<p>Class: {{ subscription.grade.name }}</p>
+<p>Amount: Ksh {{ subscription.amount }}</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<label>Phone Number</label>
+
+<input type="text"
+       name="phone"
+       class="form-control"
+       placeholder="2547XXXXXXXX"
+       required>
+
+<br>
+
+<button class="btn btn-success">
+Pay with M-Pesa
+</button>
+
+</form>

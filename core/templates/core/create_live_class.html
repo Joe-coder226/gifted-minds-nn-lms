@@ -1,0 +1,21 @@
+<h2>Create Live Session</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Select Course:</label>
+    <select name="course_id">
+        {% for course in courses %}
+            <option value="{{ course.id }}">{{ course.title }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Session Title:</label>
+    <input type="text" name="title" required>
+
+    <br><br>
+
+    <button type="submit">Start Live Session</button>
+</form>

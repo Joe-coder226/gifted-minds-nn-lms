@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Processing Payment</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f6f9;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .container{
+            background:white;
+            padding:40px;
+            border-radius:10px;
+            text-align:center;
+            width:420px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h2{
+            color:#2c7be5;
+        }
+
+        .spinner{
+            margin:30px auto;
+            border:6px solid #eee;
+            border-top:6px solid #2c7be5;
+            border-radius:50%;
+            width:50px;
+            height:50px;
+            animation:spin 1s linear infinite;
+        }
+
+        @keyframes spin{
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
+
+        .status{
+            margin-top:20px;
+            font-weight:bold;
+            color:#555;
+        }
+
+        .btn{
+            margin-top:25px;
+            padding:12px 20px;
+            border:none;
+            border-radius:5px;
+            background:#28a745;
+            color:white;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .btn:hover{
+            background:#218838;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>M-Pesa Payment Request Sent</h2>
+
+    <p>
+        Please check your phone and enter your <b>M-Pesa PIN</b> to complete the payment.
+    </p>
+
+    <div class="spinner"></div>
+
+    <div class="status" id="status">
+        Waiting for payment confirmation...
+    </div>
+
+    <button class="btn" onclick="checkPayment()">
+        Check Payment Status
+    </button>
+
+</div>
+
+
+<script>
+
+let subscriptionId = "{{ subscription.id }}";
+
+
+/* ==========================
+CHECK PAYMENT STATUS
+========================== */
+
+function checkPayment(){
+
+    fetch(`/check-payment/${subscriptionId}/`)
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if(data.active === true){
+
+            document.getElementById("status").innerHTML =
+            "Payment confirmed! Unlocking your courses...";
+
+            setTimeout(function(){
+
+                window.location.href="/student-dashboard/";
+
+            },2000);
+
+        }
+
+    });
+
+}
+
+
+/* ==========================
+AUTO CHECK EVERY 5 SECONDS
+========================== */
+
+setInterval(function(){
+
+    checkPayment();
+
+},5000);
+
+</script>
+
+</body>
+</html>

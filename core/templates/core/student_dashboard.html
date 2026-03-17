@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<h1>My Courses</h1>
+
+{% for course in courses %}
+
+<div style="border:1px solid #ccc; padding:15px; margin-bottom:10px;">
+
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+
+    <a href="{% url 'student_course' course.id %}">
+        <button>Open Course</button>
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No courses available</p>
+
+{% endfor %}
+
+{% endblock %}

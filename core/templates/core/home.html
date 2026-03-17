@@ -1,0 +1,135 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.hero-section {
+    background: linear-gradient(rgba(13,27,42,0.8), rgba(13,27,42,0.8)),
+                url('{% static "images/logo.jpeg" %}');
+    background-size: cover;
+    color: white;
+    padding: 120px 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.feature-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+
+.stat-box {
+    background: #0d1b2a;
+    color: white;
+    padding: 40px;
+    border-radius: 12px;
+}
+</style>
+
+<!-- HERO -->
+<div class="hero-section mb-5">
+    <h1 class="display-4 fw-bold">Welcome to Gifted Minds Learning Platform</h1>
+    <p class="lead">Modelling Young People to become Responsible and Productive Adults</p>
+    <a href="{% url 'student_signup' %}" class="btn btn-warning btn-lg mt-3">Join Us Today</a>
+</div>
+
+<!-- MOTTO / MISSION / VISION -->
+<div class="row text-center mb-5">
+    <div class="col-md-4">
+        <h4>🌟 MOTTO</h4>
+        <p><strong>My Future, My Responsibility.</strong></p>
+    </div>
+    <div class="col-md-4">
+        <h4>🎯 MISSION</h4>
+        <p>Modelling Young People to become Responsible and Productive Adults.</p>
+    </div>
+    <div class="col-md-4">
+        <h4>👁 VISION</h4>
+        <p>Young People in the Community will Reach their Potential and Thrive.</p>
+    </div>
+</div>
+
+<!-- GUIDING STATEMENT -->
+<div class="text-center mb-5">
+    <h4>📖 Guiding Statement</h4>
+    <p class="fst-italic">"Let not anyone look down upon you because you are young."</p>
+</div>
+
+<!-- FEATURES SECTION -->
+<div class="row mb-5">
+    <div class="col-md-4">
+        <div class="card feature-card p-4 text-center">
+            <h5>🎥 Live Classes</h5>
+            <p>Attend real-time interactive sessions with instructors.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card feature-card p-4 text-center">
+            <h5>📝 Online Exams</h5>
+            <p>Take structured assessments and receive instant results.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card feature-card p-4 text-center">
+            <h5>📊 Performance Tracking</h5>
+            <p>Monitor attendance, progress and academic growth.</p>
+        </div>
+    </div>
+</div>
+
+<!-- STATISTICS -->
+<div class="stat-box text-center mb-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h2><span class="counter" data-target="100">0</span>+</h2>
+            <p>Active Students</p>
+        </div>
+        <div class="col-md-4">
+            <h2><span class="counter" data-target="20">0</span>+</h2>
+            <p>Courses Offered</p>
+        </div>
+        <div class="col-md-4">
+            <h2><span class="counter" data-target="10">0</span>+</h2>
+            <p>Qualified Instructors</p>
+        </div>
+    </div>
+</div>
+
+<!-- CALL TO ACTION -->
+<div class="text-center mb-5">
+    <h3>Ready to Start Your Journey?</h3>
+    <a href="{% url 'student_signup' %}" class="btn btn-primary btn-lg mt-3">Enroll Now</a>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const counters = document.querySelectorAll('.counter');
+
+    counters.forEach(counter => {
+        counter.innerText = '0';
+
+        const updateCounter = () => {
+            const target = +counter.getAttribute('data-target');
+            const current = +counter.innerText;
+
+            const increment = target / 100;
+
+            if (current < target) {
+                counter.innerText = Math.ceil(current + increment);
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.innerText = target;
+            }
+        };
+
+        updateCounter();
+    });
+});
+</script>
+{% endblock %}

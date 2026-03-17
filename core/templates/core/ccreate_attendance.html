@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Attendance Session</title>
+</head>
+<body>
+
+<h2>Create Attendance Session</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <!-- COURSE SELECTION -->
+    <label>Select Course:</label>
+    <br><br>
+
+    <select name="course" required>
+        <option value="">-- Select Course --</option>
+
+        {% for course in courses %}
+            <option value="{{ course.id }}">
+                {{ course.title }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <!-- DATE -->
+    <label>Select Date:</label>
+    <br><br>
+
+    <input type="date" name="date" required>
+
+    <br><br>
+
+    <!-- SUBMIT -->
+    <button type="submit">
+        Create Session
+    </button>
+
+</form>
+
+<br>
+
+<a href="{% url 'admin_dashboard' %}">
+    Back to Dashboard
+</a>
+
+</body>
+</html>
