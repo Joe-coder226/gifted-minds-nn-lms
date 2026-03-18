@@ -1,13 +1,11 @@
-<h2>{{ session.title }}</h2>
+<h3>Live Class</h3>
 
-<p>Click below to join the live class</p>
-
-<a href="{{ session.meeting_link }}" target="_blank">
-
-<button>
-
-Join Live Class
-
-</button>
-
-</a>
+{% for session in course.livesession_set.all %}
+    {% if session.is_active %}
+        <a href="{% url 'join_live_class' session.id %}">
+            Join Live Class
+        </a>
+    {% endif %}
+{% empty %}
+    <p>No live class currently.</p>
+{% endfor %}

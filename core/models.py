@@ -75,19 +75,14 @@ class CourseMaterial(models.Model):
 # =========================
 class AttendanceSession(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.course.title} - {self.date}"
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
 
 class Attendance(models.Model):
     session = models.ForeignKey(AttendanceSession, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
-    present = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.student.username} - {self.session.course.title}"
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 # =========================

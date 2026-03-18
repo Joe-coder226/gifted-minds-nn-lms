@@ -30,9 +30,13 @@
                 </tbody>
             </table>
 
-            <button type="submit" class="btn btn-primary">
-                Save Attendance
-            </button>
+            <h3>Attendance</h3>
+
+            {% for session in course.attendancesession_set.all %}
+                <a href="{% url 'mark_attendance' session.id %}">
+                    Mark Attendance
+                </a>
+            {% endfor %}
         </form>
 
     </div>

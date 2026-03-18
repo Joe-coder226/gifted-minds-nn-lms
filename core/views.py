@@ -464,7 +464,7 @@ def mark_attendance(request, session_id):
             )
 
         messages.success(request, "Attendance recorded successfully.")
-        return redirect("admin_dashboard")
+        return redirect("student_dashboard")
 
     return render(request, "core/mark_attendance.html", {
         "session": session,
@@ -493,7 +493,6 @@ def student_attendance(request):
 # VIEW MATERIAL
 # ======================================
 @login_required
-@subscription_required
 def view_material(request, material_id):
 
     material = get_object_or_404(CourseMaterial, id=material_id)
@@ -621,35 +620,25 @@ def take_exam(request, exam_id):
 #=======================================
 # CREATE LIVE CLASS
 #=======================================
+from django.shortcuts import get_object_or_404, redirect, render
+
 @login_required
-def create_live_session(request):
+def create_live_session(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
 
-    if not request.user.is_staff:
-        return redirect("student_dashboard")
+    # Generate room name automatically
+    room_name = f"GiftedMinds-{course.title}-{course.id}"
 
-    courses = Course.objects.all()
+    # Delete previous active sessions (optional)
+    LiveSession.objects.filter(course=course, is_active=True).update(is_active=False)
 
-    if request.method == "POST":
+    # Create new session
+    session = LiveSession.objects.create(
+        course=course,
+        room_name=room_name
+    )
 
-        course_id = request.POST.get("course")
-        title = request.POST.get("title")
-        meeting_link = request.POST.get("meeting_link")
-
-        course = Course.objects.get(id=course_id)
-
-        LiveSession.objects.create(
-            course=course,
-            title=title,
-            meeting_link=meeting_link,
-            is_active=True
-        )
-
-        messages.success(request, "Live class created.")
-        return redirect("admin_dashboard")
-
-    return render(request, "core/create_live_class.html", {
-        "courses": courses
-    })
+    return redirect("join_live_class", session_id=session.id)
 
 
 # ======================================

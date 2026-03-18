@@ -39,13 +39,11 @@ Upload Course Notes
 <form method="POST">
     {% csrf_token %}
 
-    <input type="text" name="live_title" placeholder="Live Class Title" required>
-
-    <input type="text" name="meeting_link" placeholder="Meeting Link" required>
-
-    <button type="submit" name="create_live">
-        Start Live Class
-    </button>
+        {% if request.user.is_staff %}
+            <a href="{% url 'create_live_session' course.id %}">
+                Start Live Class
+            </a>
+        {% endif %}
 
 </form>
 
