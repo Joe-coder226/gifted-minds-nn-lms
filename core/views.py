@@ -134,6 +134,22 @@ def create_course(request):
 
     return render(request, "core/create_course.html", {"levels": levels, "grades": grades})
 
+#=======================================
+# DELETE COURSE
+#=======================================
+@login_required
+def delete_course(request, course_id):
+
+    if not request.user.is_staff:
+        return redirect("student_dashboard")
+
+    course = get_object_or_404(Course, id=course_id)
+
+    course.delete()
+
+    messages.success(request, "Course deleted successfully!")
+
+    return redirect("admin_dashboard")
 
 # ======================================
 # MATERIAL & VIDEO
