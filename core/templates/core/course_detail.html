@@ -40,7 +40,7 @@ Upload Course Notes
     {% csrf_token %}
 
         {% if request.user.is_staff %}
-            <a href="{% url 'create_live_session' course.id %}">
+            <a href="{% url 'create_live_class' course.id %}">
                 Start Live Class
             </a>
         {% endif %}
