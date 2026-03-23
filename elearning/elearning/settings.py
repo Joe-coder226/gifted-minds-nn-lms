@@ -82,12 +82,13 @@ import dj_database_url
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
+if not DATABASE_URL:
+    raise Exception("DATABASE_URL is not set!")
+
 DATABASES = {
-    "default": dj_database_url.parse(DATABASE_URL) if DATABASE_URL else {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(os.path.dirname(__file__), "db.sqlite3"),
-    }
+    "default": dj_database_url.parse(DATABASE_URL)
 }
+
 
 
 # Password validation
