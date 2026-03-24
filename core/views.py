@@ -150,6 +150,26 @@ def delete_course(request, course_id):
     messages.success(request, "Course deleted successfully!")
 
     return redirect("admin_dashboard")
+#=======================================
+# STUDENT COURSE
+#=======================================
+@login_required
+def student_course(request, course_id):
+
+    course = get_object_or_404(Course, id=course_id)
+
+    videos = Video.objects.filter(course=course)
+    materials = CourseMaterial.objects.filter(course=course)
+    exams = Exam.objects.filter(course=course)
+    live_sessions = LiveSession.objects.filter(course=course, is_active=True)
+
+    return render(request, "core/student_course.html", {
+        "course": course,
+        "videos": videos,
+        "materials": materials,
+        "exams": exams,
+        "live_sessions": live_sessions
+    })
 
 # ======================================
 # MATERIAL & VIDEO
