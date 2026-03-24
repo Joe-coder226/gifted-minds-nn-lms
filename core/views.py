@@ -73,15 +73,53 @@ def student_dashboard(request):
 
 @login_required
 def admin_dashboard(request):
+
     if not request.user.is_staff:
         return redirect("student_dashboard")
 
     courses = Course.objects.all()
     exams = Exam.objects.all()
+    live_sessions = LiveSession.objects.all()
+
+    levels = Level.objects.all()
+    grades = Grade.objects.all()
+
+    # student count per course
+    courses_with_counts = []
+    for course in courses:
+        student_count = Subscription.objects.filter(
+            grade=course.grade,
+            is_active=True
+        ).count()
+
+        course.student_count = student_count
+        courses_with_counts.append(course)
+
+    total_students = User.objects.filter(is_staff=False).count()
+    total_courses = courses.count()
+    total_subscriptions = Subscription.objects.count()
+    total_exams = exams.count()
+    active_live_sessions = live_sessions.filter(is_active=True).count()
+
+    exam_stats = exams.annotate(
+        average_score=Avg("studentexam__score"),
+        highest_score=Max("studentexam__score"),
+        lowest_score=Min("studentexam__score"),
+        total_attempts=Count("studentexam")
+    )
 
     return render(request, "core/admin_dashboard.html", {
-        "courses": courses,
-        "exams": exams
+        "courses_with_counts": courses_with_counts,
+        "exams": exams,
+        "live_sessions": live_sessions,
+        "levels": levels,
+        "grades": grades,
+        "total_students": total_students,
+        "total_courses": total_courses,
+        "total_subscriptions": total_subscriptions,
+        "total_exams": total_exams,
+        "active_live_sessions": active_live_sessions,
+        "exam_stats": exam_stats
     })
 
 
