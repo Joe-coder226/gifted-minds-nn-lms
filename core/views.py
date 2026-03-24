@@ -271,6 +271,22 @@ def mark_attendance(request, session_id):
     )
 
     return redirect("course_detail", course_id=session.course.id)
+#=======================================
+# STUDENT ATTENDANCE
+#=======================================
+@login_required
+def student_attendance(request):
+
+    if request.user.is_staff:
+        return redirect("admin_dashboard")
+
+    attendance_records = Attendance.objects.filter(
+        student=request.user
+    ).select_related("session__course")
+
+    return render(request, "core/student_attendance.html", {
+        "attendance_records": attendance_records
+    })
 
 
 # ======================================
