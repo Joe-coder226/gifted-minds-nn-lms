@@ -240,7 +240,43 @@ def create_live_session(request, course_id):
 def join_live_class(request, session_id):
     session = get_object_or_404(LiveSession, id=session_id)
     return render(request, "core/live_class.html", {"session": session})
+#=======================================
+# LIVE SESSION ROOM
+#=======================================
+@login_required
+def live_session_room(request, session_id):
 
+    session = get_object_or_404(LiveSession, id=session_id)
+
+    if not request.user.is_staff:
+
+        if not Subscription.objects.filter(
+            student=request.user,
+            is_active=True
+        ).exists():
+
+            return redirect("subscribe")
+
+    return render(request, "core/live_room.html", {
+        "session": session
+    })
+#=======================================
+# END LIVE SESSION
+#=======================================
+@login_required
+def end_live_session(request, session_id):
+
+    if not request.user.is_staff:
+        return redirect("student_dashboard")
+
+    session = get_object_or_404(LiveSession, id=session_id)
+
+    session.is_active = False
+    session.save()
+
+    messages.success(request, "Live session ended.")
+
+    return redirect("admin_dashboard")
 
 # ======================================
 # ATTENDANCE
@@ -320,6 +356,35 @@ def take_exam(request, exam_id):
     return render(request, "core/take_exam.html", {
         "exam": exam,
         "questions": questions
+    })
+#=======================================
+# ADD QUESTIONS
+#=======================================
+@login_required
+def add_question(request, exam_id):
+
+    if not request.user.is_staff:
+        return redirect("student_dashboard")
+
+    exam = get_object_or_404(Exam, id=exam_id)
+
+    if request.method == "POST":
+
+        Question.objects.create(
+            exam=exam,
+            question_text=request.POST.get("question_text"),
+            option_a=request.POST.get("option_a"),
+            option_b=request.POST.get("option_b"),
+            option_c=request.POST.get("option_c"),
+            option_d=request.POST.get("option_d"),
+            correct_answer=request.POST.get("correct_answer"),
+        )
+
+        messages.success(request, "Question added successfully.")
+        return redirect("admin_dashboard")
+
+    return render(request, "core/add_question.html", {
+        "exam": exam
     })
 
 

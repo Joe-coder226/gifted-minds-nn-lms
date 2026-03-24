@@ -42,18 +42,6 @@ urlpatterns = [
     path('live/end/<int:session_id>/', views.end_live_session, name='end_live_session'),
     path('live/join/<int:session_id>/', views.join_live_class, name='join_live_class'),
 
-    # PAYMENT
-    path('payment/<int:subscription_id>/', views.make_payment, name='make_payment'),
-
-    #MPESA
-    path('pay/<int:course_id>/', views.initiate_payment, name='initiate_payment'),
-    path('mpesa/callback/', views.mpesa_callback, name='mpesa_callback'),
-
-    #SUBSRIPTION
-    path('subscription/', views.subscription_page, name='subscription_page'),
-    path('subscribe/', views.subscribe, name='subscribe'),
-
-    #CHECK PAYMENT
-    path("check-payment/<int:subscription_id>/",views.check_payment,name="check_payment"),
+   
 
 ]
