@@ -49,9 +49,15 @@ Upload Course Notes
 
 <br><br>
 
-<a href="{% url 'create_attendance_session' course.id %}">
-Start Attendance Session
-</a>
+<h3>Attendance</h3>
+
+{% if attendance_session %}
+    <a href="{% url 'mark_attendance' attendance_session.id %}">
+        Mark Attendance
+    </a>
+{% else %}
+    <p>No active attendance</p>
+{% endif %}
 
 <hr>
 
@@ -64,22 +70,12 @@ Start Attendance Session
 
 <h3>Course Videos</h3>
 
-{% for video in course.video_set.all %}
-
-<div style="margin-bottom:20px">
-
-<h4>{{ video.title }}</h4>
-
-<video width="500" controls>
-<source src="{{ video.video.url }}">
-</video>
-
-</div>
-
+{% for video in videos %}
+    <video width="400" controls>
+        <source src="{{ video.video.url }}">
+    </video>
 {% empty %}
-
-<p>No videos uploaded yet.</p>
-
+    <p>No videos available</p>
 {% endfor %}
 
 <hr>
@@ -91,7 +87,7 @@ Start Attendance Session
 
 <h3>Course Notes</h3>
 
-{% for material in course.coursematerial_set.all %}
+{% for material in materials %}
 
 <p>
 
@@ -149,24 +145,12 @@ View Notes
 
 <h3>Live Classes</h3>
 
-{% for live in course.livesession_set.all %}
-
-<p>
-
-{{ live.title }}
-
-<a href="{{ live.meeting_link }}" target="_blank">
-
-<button>Join Live Class</button>
-
-</a>
-
-</p>
-
+{% for live in live_sessions %}
+    <a href="{% url 'join_live_class' live.id %}">
+        Join Class
+    </a>
 {% empty %}
-
-<p>No live classes scheduled.</p>
-
+    <p>No active live class</p>
 {% endfor %}
 
 <hr>
