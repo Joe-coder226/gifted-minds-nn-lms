@@ -25,6 +25,7 @@ urlpatterns = [
     path('view-material/<int:material_id>/', views.view_material, name='view_material'),
     path("student-course/<int:course_id>/", views.student_course, name="student_course"),
     path("upload-video/<int:course_id>/", views.upload_video, name="upload_video"),
+    path('video/<int:video_id>/', views.watch_video, name='watch_video'),
 
 
     # ATTENDANCE

@@ -249,6 +249,14 @@ def upload_video(request, course_id):
 
     return render(request, "core/upload_video.html", {"course": course})
 
+@login_required
+def watch_video(request, video_id):
+
+    video = get_object_or_404(Video, id=video_id)
+
+    return render(request, "core/watch_video.html", {
+        "video": video
+    })
 
 # ======================================
 # LIVE CLASS
