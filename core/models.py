@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+from cloudinary.models import CloudinaryField
 
 
 # =========================
@@ -63,7 +64,7 @@ class Course(models.Model):
 class CourseMaterial(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    file = models.FileField(upload_to='course_materials/')
+    file = CloudinaryField('file')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -201,7 +202,7 @@ class Video(models.Model):
 
     course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="videos")
 
-    video = models.FileField(upload_to='videos/')
+    video = CloudinaryField('video')
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
 

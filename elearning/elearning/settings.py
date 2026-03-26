@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'cloudinary',
+    'cloudinary_storage',
 
 ]
 
@@ -138,8 +143,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 LOGIN_REDIRECT_URL = '/redirect-dashboard/'
 LOGIN_URL = '/login/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 MPESA_CONSUMER_KEY = "YOUR_CONSUMER_KEY"
@@ -147,3 +151,9 @@ MPESA_CONSUMER_SECRET = "YOUR_CONSUMER_SECRET"
 MPESA_SHORTCODE = "174379"
 MPESA_PASSKEY = "YOUR_PASSKEY"
 MPESA_CALLBACK_URL = "https://yourdomain.com/mpesa/callback/"
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'duk1cwndp',
+    'API_KEY': '523861591748689',
+    'API_SECRET': 'MK1GN9U2zgE5V-rfJt269o1yKBo',
+}
