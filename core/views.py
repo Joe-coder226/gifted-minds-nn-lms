@@ -81,6 +81,9 @@ def admin_dashboard(request):
     exams = Exam.objects.all()
     live_sessions = LiveSession.objects.all()
 
+    # ✅ ADD THIS LINE (attendance sessions)
+    attendance_sessions = AttendanceSession.objects.all().order_by('-created_at')
+
     levels = Level.objects.all()
     grades = Grade.objects.all()
 
@@ -112,6 +115,10 @@ def admin_dashboard(request):
         "courses_with_counts": courses_with_counts,
         "exams": exams,
         "live_sessions": live_sessions,
+
+        # ✅ ADD THIS (send to template)
+        "attendance_sessions": attendance_sessions,
+
         "levels": levels,
         "grades": grades,
         "total_students": total_students,

@@ -123,7 +123,20 @@
     </form>
 
 </div>
+<h3>Attendance Sessions</h3>
 
+{% for session in attendance_sessions %}
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        <strong>{{ session.course.title }}</strong><br>
+        Created: {{ session.created_at }}<br>
+
+        <a href="{% url 'mark_attendance' session.id %}">
+            Mark Attendance
+        </a>
+    </div>
+{% empty %}
+    <p>No attendance sessions available.</p>
+{% endfor %}
 
 
 
