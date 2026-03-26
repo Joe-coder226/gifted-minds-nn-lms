@@ -1,161 +1,168 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ course.title }} - GIFTED MINDS</title>
-</head>
-<body>
+{% extends "core/base.html" %}
+{% load static %}
 
-<h1>{{ course.title }}</h1>
+{% block content %}
 
-<p>{{ course.description }}</p>
+<div class="max-w-6xl mx-auto">
 
-<p>Instructor: {{ course.created_by.username }}</p>
+    <!-- COURSE HEADER -->
+    <div class="bg-white p-6 rounded-xl shadow mb-6">
+        <h1 class="text-2xl font-bold">{{ course.title }}</h1>
+        <p class="text-gray-600 mt-2">{{ course.description }}</p>
 
-<hr>
+        <p class="mt-2 text-sm text-gray-500">
+            Instructor: {{ course.created_by.username }}
+        </p>
+    </div>
 
 
-<!-- ========================= -->
-<!-- ADMIN ACTIONS -->
-<!-- ========================= -->
+    <!-- ========================= -->
+    <!-- ADMIN PANEL -->
+    <!-- ========================= -->
 
-{% if request.user.is_staff %}
+    {% if request.user.is_staff %}
 
-<h3>Instructor Panel</h3>
+    <div class="bg-blue-50 p-4 rounded-xl mb-6">
 
-<a href="{% url 'upload_material' course.id %}">
-Upload Course Notes
-</a>
+        <h3 class="font-bold text-lg mb-3">Instructor Panel</h3>
 
-<br><br>
+        <div class="flex flex-wrap gap-3">
 
-<a href="{% url 'upload_video' course.id %}">
-    Upload Course Video
-</a>
-
-<br><br>
-
-<h4>Create Live Class</h4>
-
-<form method="POST">
-    {% csrf_token %}
-
-        {% if request.user.is_staff %}
-            <a href="{% url 'create_live_class' course.id %}">
-                Start Live Class
+            <a href="{% url 'upload_material' course.id %}"
+               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+               Upload Notes
             </a>
-        {% endif %}
 
-</form>
+            <a href="{% url 'upload_video' course.id %}"
+               class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+               Upload Video
+            </a>
 
-<br><br>
+            <a href="{% url 'create_live_session' course.id %}"
+               class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+               Start Live Class
+            </a>
 
-<h3>Attendance</h3>
+        </div>
 
-{% if attendance_session %}
-    <a href="{% url 'mark_attendance' attendance_session.id %}">
-        Mark Attendance
-    </a>
-{% else %}
-    <p>No active attendance</p>
-{% endif %}
+        <!-- Attendance -->
+        <div class="mt-4">
+            <h4 class="font-semibold">Attendance</h4>
 
-<hr>
+            {% if attendance_session %}
+                <a href="{% url 'mark_attendance' attendance_session.id %}"
+                   class="text-blue-600 underline">
+                   Mark Attendance
+                </a>
+            {% else %}
+                <p class="text-gray-500">No active attendance</p>
+            {% endif %}
+        </div>
 
-{% endif %}
+    </div>
 
-
-<!-- ========================= -->
-<!-- COURSE VIDEOS -->
-<!-- ========================= -->
-
-<h3>Course Videos</h3>
-
-{% for video in videos %}
-    <video width="400" controls>
-        <source src="{{ video.video.url }}">
-    </video>
-{% empty %}
-    <p>No videos available</p>
-{% endfor %}
-
-<hr>
+    {% endif %}
 
 
-<!-- ========================= -->
-<!-- COURSE NOTES -->
-<!-- ========================= -->
+    <!-- ========================= -->
+    <!-- LIVE CLASSES -->
+    <!-- ========================= -->
 
-<h3>Course Notes</h3>
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-3">Live Classes</h3>
 
-{% for material in materials %}
-
-<p>
-
-{{ material.title }} -
-
-<a href="{{ material.file.url }}" target="_blank">
-
-View Notes
-
-</a>
-
-</p>
-
-{% empty %}
-
-<p>No materials uploaded yet.</p>
-
-{% endfor %}
-
-<hr>
+        {% for live in live_sessions %}
+            <a href="{% url 'live_session_room' live.id %}"
+               class="inline-block bg-green-500 text-white px-4 py-2 rounded mb-2">
+               Join Live Class
+            </a>
+        {% empty %}
+            <p class="text-gray-500">No active live class</p>
+        {% endfor %}
+    </div>
 
 
-<!-- ========================= -->
-<!-- COURSE EXAMS -->
-<!-- ========================= -->
+    <!-- ========================= -->
+    <!-- VIDEOS -->
+    <!-- ========================= -->
 
-<h3>Course Exams</h3>
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-3">Course Videos</h3>
 
-{% for exam in course.exam_set.all %}
+        <div class="grid md:grid-cols-2 gap-4">
 
-<p>
+        {% for video in videos %}
+            <div class="border p-3 rounded">
+                <p class="font-medium">{{ video.title }}</p>
 
-{{ exam.title }}
+                <video controls class="w-full mt-2" preload="metadata">
+                    <source src="{{ video.video.url }}">
+                </video>
+            </div>
+        {% empty %}
+            <p>No videos available</p>
+        {% endfor %}
 
-<a href="{% url 'take_exam' exam.id %}">
-
-<button>Take Exam</button>
-
-</a>
-
-</p>
-
-{% empty %}
-
-<p>No exams created yet.</p>
-
-{% endfor %}
-
-<hr>
+        </div>
+    </div>
 
 
-<!-- ========================= -->
-<!-- LIVE CLASSES -->
-<!-- ========================= -->
+    <!-- ========================= -->
+    <!-- MATERIALS -->
+    <!-- ========================= -->
 
-<h3>Live Classes</h3>
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-3">Course Notes</h3>
 
-{% for live in live_sessions %}
-    <a href="{% url 'join_live_class' live.id %}">
-        Join Class
-    </a>
-{% empty %}
-    <p>No active live class</p>
-{% endfor %}
+        {% for material in materials %}
+            <div class="flex justify-between items-center border-b py-2">
 
-<hr>
+                <span>{{ material.title }}</span>
 
-<a href="javascript:history.back()">Back</a>
+                <a href="{{ material.file.url }}" target="_blank"
+                   class="text-blue-600 underline">
+                   View
+                </a>
 
-</body>
-</html>
+            </div>
+        {% empty %}
+            <p>No materials uploaded yet.</p>
+        {% endfor %}
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- EXAMS -->
+    <!-- ========================= -->
+
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-3">Course Exams</h3>
+
+        {% for exam in course.exam_set.all %}
+            <div class="flex justify-between items-center border-b py-2">
+
+                <span>{{ exam.title }}</span>
+
+                <a href="{% url 'take_exam' exam.id %}"
+                   class="bg-blue-600 text-white px-3 py-1 rounded">
+                   Take Exam
+                </a>
+
+            </div>
+        {% empty %}
+            <p>No exams created yet.</p>
+        {% endfor %}
+    </div>
+
+
+    <!-- BACK BUTTON -->
+    <div class="text-center">
+        <a href="javascript:history.back()"
+           class="text-blue-600 underline">
+           ← Back
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
