@@ -152,8 +152,8 @@ MPESA_SHORTCODE = "174379"
 MPESA_PASSKEY = "YOUR_PASSKEY"
 MPESA_CALLBACK_URL = "https://yourdomain.com/mpesa/callback/"
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'duk1cwndp',
-    'API_KEY': '523861591748689',
-    'API_SECRET': 'MK1GN9U2zgE5V-rfJt269o1yKBo',
-}
+cloudinary.config(
+    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key = os.getenv("CLOUDINARY_API_KEY"),
+    api_secret = os.getenv("CLOUDINARY_API_SECRET"),
+)
