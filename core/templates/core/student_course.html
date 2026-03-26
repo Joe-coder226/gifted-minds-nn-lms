@@ -64,7 +64,7 @@
 
 {% if live_sessions %}
     {% for session in live_sessions %}
-        <a href="{% url 'live_session_room' session.id %}">
+        <a href="{% url 'live_room' session.id %}">
             Join Live Class
         </a>
     {% endfor %}
