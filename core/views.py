@@ -278,22 +278,20 @@ def create_live_session(request, course_id):
 
     course = get_object_or_404(Course, id=course_id)
 
-    # Generate UNIQUE room name
-    room_name = f"room_{course.id}_{uuid.uuid4().hex[:6]}"
-
-    # Deactivate old sessions
+    # deactivate old sessions
     LiveSession.objects.filter(course=course, is_active=True).update(is_active=False)
 
-    # Create new session
+    # create new session
     session = LiveSession.objects.create(
         course=course,
         title=f"{course.title} Live Class",
-        room_name=room_name,
+        room_name=f"room_{uuid.uuid4().hex[:6]}",
         created_by=request.user,
         is_active=True
     )
 
-    return redirect("join_live_class", session_id=session.id)
+    # ✅ IMPORTANT: go directly to room
+    return redirect("live_session_room", session_id=session.id)
 
 
 @login_required
@@ -306,16 +304,7 @@ def join_live_class(request, session_id):
 @login_required
 def live_session_room(request, session_id):
 
-    session = get_object_or_404(LiveSession, id=session_id)
-
-    if not request.user.is_staff:
-
-        if not Subscription.objects.filter(
-            student=request.user,
-            is_active=True
-        ).exists():
-
-            return redirect("subscribe")
+    session = get_object_or_404(LiveSession, id=session_id, is_active=True)
 
     return render(request, "core/live_room.html", {
         "session": session

@@ -62,18 +62,12 @@
 
 <h2>🔴 Live Classes</h2>
 
-{% for session in live_sessions %}
-<div style="margin-bottom:10px">
-
-<strong>{{ session.title }}</strong>
-
-<a href="{% url 'join_live_class' session.id %}">
-<button>Join Live Class</button>
-</a>
-
-</div>
-{% empty %}
-<p>No live classes running.</p>
-{% endfor %}
-
-{% endblock %}
+{% if live_sessions %}
+    {% for session in live_sessions %}
+        <a href="{% url 'live_session_room' session.id %}">
+            Join Live Class
+        </a>
+    {% endfor %}
+{% else %}
+    <p>No live class available</p>
+{% endif %}
