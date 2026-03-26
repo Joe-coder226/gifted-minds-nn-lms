@@ -261,6 +261,8 @@ def watch_video(request, video_id):
 # ======================================
 # LIVE CLASS
 # ======================================
+import uuid
+
 @login_required
 def create_live_session(request, course_id):
 
@@ -269,12 +271,17 @@ def create_live_session(request, course_id):
 
     course = get_object_or_404(Course, id=course_id)
 
+    # Generate UNIQUE room name
+    room_name = f"room_{course.id}_{uuid.uuid4().hex[:6]}"
+
+    # Deactivate old sessions
     LiveSession.objects.filter(course=course, is_active=True).update(is_active=False)
 
+    # Create new session
     session = LiveSession.objects.create(
         course=course,
-        title=f"{course.title} Live",
-        room_name=f"room_{course.id}",
+        title=f"{course.title} Live Class",
+        room_name=room_name,
         created_by=request.user,
         is_active=True
     )
