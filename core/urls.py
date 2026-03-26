@@ -39,7 +39,7 @@ urlpatterns = [
 
     # LIVE SESSIONS
     path('live/create/<int:course_id>/', views.create_live_session, name='create_live_session'),
-    path('live/<int:session_id>/', views.live_session_room, name='live_room'),
+    path('live/<int:session_id>/', views.live_session_room, name='live_session_room'),
     path('live/end/<int:session_id>/', views.end_live_session, name='end_live_session'),
     path('live/join/<int:session_id>/', views.join_live_class, name='join_live_class'),
 
