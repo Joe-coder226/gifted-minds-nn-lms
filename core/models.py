@@ -48,7 +48,7 @@ class Course(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='course_images/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
 
     # NEW FIELDS
     level = models.ForeignKey(Level, on_delete=models.CASCADE, null=True)
@@ -64,7 +64,7 @@ class Course(models.Model):
 class CourseMaterial(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    file = CloudinaryField('raw')
+    file = CloudinaryField(resource_type='raw')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
