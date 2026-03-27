@@ -445,10 +445,8 @@ def view_material(request, material_id):
 
     material = get_object_or_404(CourseMaterial, id=material_id)
 
-    response = FileResponse(material.file.open("rb"))
-    response["Content-Disposition"] = "inline"
-
-    return response
+    # Redirect directly to Cloudinary file URL
+    return redirect(material.file.url)
 
 
 # ======================================

@@ -64,7 +64,7 @@ class Course(models.Model):
 class CourseMaterial(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    file = CloudinaryField('file')
+    file = CloudinaryField('raw')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
