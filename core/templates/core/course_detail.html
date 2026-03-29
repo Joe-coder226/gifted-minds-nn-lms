@@ -119,9 +119,9 @@
 
                 <span>{{ material.title }}</span>
 
-                <a href="{{ material.file.url }}" target="_blank"
-                   class="text-blue-600 underline">
-                   View
+                <a href="{% url 'view_material' material.id %}"
+                    class="text-blue-600 underline">
+                    View
                 </a>
 
             </div>

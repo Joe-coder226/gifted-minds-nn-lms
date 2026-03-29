@@ -445,8 +445,14 @@ def view_material(request, material_id):
 
     material = get_object_or_404(CourseMaterial, id=material_id)
 
-    # Redirect directly to Cloudinary file URL
-    return redirect(material.file.url)
+    file_url = material.file.url
+
+    # Safety check (prevents broken links)
+    if not file_url or "res.cloudinary.com" not in file_url:
+        messages.error(request, "File not available.")
+        return redirect("course_detail", course_id=material.course.id)
+
+    return redirect(file_url)
 
 
 # ======================================
