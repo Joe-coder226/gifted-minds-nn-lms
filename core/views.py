@@ -228,14 +228,25 @@ def upload_material(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
     if request.method == "POST":
+
+        title = request.POST.get("title")
+        file = request.FILES.get("file")  # 🔥 MUST be request.FILES
+
+        if not file:
+            messages.error(request, "No file selected")
+            return redirect("upload_material", course_id=course.id)
+
         CourseMaterial.objects.create(
             course=course,
-            title=request.POST.get("title"),
-            file=request.FILES.get("file")
+            title=title,
+            file=file
         )
+
         return redirect("course_detail", course_id=course.id)
 
-    return render(request, "core/upload_material.html", {"course": course})
+    return render(request, "core/upload_material.html", {
+        "course": course
+    })
 
 
 @login_required
