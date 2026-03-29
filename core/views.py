@@ -230,7 +230,7 @@ def upload_material(request, course_id):
     if request.method == "POST":
 
         title = request.POST.get("title")
-        file = request.FILES.get("file")  # 🔥 MUST be request.FILES
+        file = request.FILES.get("file")  # ✅ IMPORTANT
 
         if not file:
             messages.error(request, "No file selected")
@@ -242,12 +242,13 @@ def upload_material(request, course_id):
             file=file
         )
 
+        messages.success(request, "Material uploaded successfully")
+
         return redirect("course_detail", course_id=course.id)
 
     return render(request, "core/upload_material.html", {
         "course": course
     })
-
 
 @login_required
 def upload_video(request, course_id):

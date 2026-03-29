@@ -1,31 +1,54 @@
 {% extends "core/base.html" %}
 {% block content %}
 
-<div class="container mt-5">
-    <div class="card shadow p-4">
+<div class="max-w-xl mx-auto mt-10">
 
-        <h4 class="fw-bold mb-4">Upload Material for {{ course.title }}</h4>
+    <div class="bg-white p-6 rounded-xl shadow">
+
+        <h4 class="text-xl font-bold mb-4">
+            Upload Material for {{ course.title }}
+        </h4>
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="mb-3">
-                <label class="form-label">Material Title</label>
-                <input type="text" name="title" class="form-control" required>
+            <!-- TITLE -->
+            <div class="mb-4">
+                <label class="block font-medium mb-1">Material Title</label>
+                <input type="text"
+                       name="title"
+                       class="w-full border rounded px-3 py-2"
+                       placeholder="e.g. Biology Notes - Topic 1"
+                       required>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Upload File (PDF)</label>
-                <input type="file" name="file" class="form-control" required>
+            <!-- FILE -->
+            <div class="mb-4">
+                <label class="block font-medium mb-1">
+                    Upload File (PDF, DOCX, PPT)
+                </label>
+
+                <input type="file"
+                       name="file"
+                       class="w-full border rounded px-3 py-2"
+                       accept=".pdf,.doc,.docx,.ppt,.pptx"
+                       required>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Supported: PDF, Word, PowerPoint
+                </p>
             </div>
 
-            <button type="submit" class="btn btn-success">
-                Upload
+            <!-- BUTTON -->
+            <button type="submit"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Upload Material
             </button>
 
         </form>
 
     </div>
+
 </div>
 
 {% endblock %}
