@@ -152,13 +152,17 @@ MPESA_SHORTCODE = "174379"
 MPESA_PASSKEY = "YOUR_PASSKEY"
 MPESA_CALLBACK_URL = "https://yourdomain.com/mpesa/callback/"
 
-cloudinary.config(
-    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME"),
-    api_key = os.getenv("CLOUDINARY_API_KEY"),
-    api_secret = os.getenv("CLOUDINARY_API_SECRET"),
-)
-CLOUDINARY_STORAGE = {
-    'CLOUDINARY_CLOUD_NAME': 'duk1cwndp',
-    'CLOUDINARY_API_KEY': '523861591748689',
-    'CLOUDINARY_API_SECRET': 'MK1GN9U2zgE5V-rfJt269o1yKBo',
-}
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#cloudinary.config(
+    #cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME"),
+    #api_key = os.getenv("CLOUDINARY_API_KEY"),
+    #api_secret = os.getenv("CLOUDINARY_API_SECRET"),
+#)
+#CLOUDINARY_STORAGE = {
+    #'CLOUDINARY_CLOUD_NAME': 'duk1cwndp',
+    #'CLOUDINARY_API_KEY': '523861591748689',
+    #'CLOUDINARY_API_SECRET': 'MK1GN9U2zgE5V-rfJt269o1yKBo',
+#}

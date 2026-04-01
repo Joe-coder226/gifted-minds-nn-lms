@@ -64,7 +64,7 @@ class Course(models.Model):
 class CourseMaterial(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    file = CloudinaryField(resource_type='auto')
+    file = models.FileField(upload_to='course_materials/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -196,15 +196,13 @@ class Payment(models.Model):
     def __str__(self):
         return f"{self.student.username} - {self.level} - {self.status}"
 
+from django.db import models
+
 class Video(models.Model):
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='videos')
+    title = models.CharField(max_length=255)
 
-    title = models.CharField(max_length=200)
-
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="videos")
-
-    video = CloudinaryField('video')
+    video_file = models.FileField(upload_to='courses/videos/')
+    thumbnail = models.ImageField(upload_to='courses/thumbnails/', null=True, blank=True)
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
