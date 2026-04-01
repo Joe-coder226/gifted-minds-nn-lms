@@ -7,55 +7,55 @@
 
     <!-- COURSE HEADER -->
     <div class="bg-white p-6 rounded-xl shadow mb-6">
-        <h1 class="text-2xl font-bold">{{ course.title }}</h1>
+        <h1 class="text-3xl font-bold text-gray-800">{{ course.title }}</h1>
         <p class="text-gray-600 mt-2">{{ course.description }}</p>
 
-        <p class="mt-2 text-sm text-gray-500">
-            Instructor: {{ course.created_by.username }}
+        <p class="mt-3 text-sm text-gray-500">
+            👨‍🏫 Instructor: <span class="font-medium">{{ course.created_by.username }}</span>
         </p>
     </div>
 
 
     <!-- ========================= -->
-    <!-- ADMIN PANEL -->
+    <!-- INSTRUCTOR PANEL -->
     <!-- ========================= -->
 
     {% if request.user.is_staff %}
 
-    <div class="bg-blue-50 p-4 rounded-xl mb-6">
+    <div class="bg-blue-50 p-5 rounded-xl mb-6 shadow-sm">
 
-        <h3 class="font-bold text-lg mb-3">Instructor Panel</h3>
+        <h3 class="font-bold text-lg mb-4 text-gray-800">Instructor Panel</h3>
 
         <div class="flex flex-wrap gap-3">
 
             <a href="{% url 'upload_material' course.id %}"
-               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-               Upload Notes
+               class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+               📚 Upload Notes
             </a>
 
             <a href="{% url 'upload_video' course.id %}"
-               class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
-               Upload Video
+               class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+               🎥 Upload Video
             </a>
 
             <a href="{% url 'create_live_session' course.id %}"
-               class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-               Start Live Class
+               class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+               🔴 Start Live Class
             </a>
 
         </div>
 
         <!-- Attendance -->
-        <div class="mt-4">
-            <h4 class="font-semibold">Attendance</h4>
+        <div class="mt-5">
+            <h4 class="font-semibold text-gray-700">Attendance</h4>
 
             {% if attendance_session %}
                 <a href="{% url 'mark_attendance' attendance_session.id %}"
-                   class="text-blue-600 underline">
+                   class="inline-block mt-2 text-blue-600 hover:underline font-medium">
                    Mark Attendance
                 </a>
             {% else %}
-                <p class="text-gray-500">No active attendance</p>
+                <p class="text-gray-500 mt-1">No active attendance</p>
             {% endif %}
         </div>
 
@@ -68,12 +68,12 @@
     <!-- LIVE CLASSES -->
     <!-- ========================= -->
 
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-        <h3 class="text-xl font-semibold mb-3">Live Classes</h3>
+    <div class="bg-white p-5 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">🔴 Live Classes</h3>
 
         {% for live in live_sessions %}
             <a href="{% url 'live_session_room' live.id %}"
-               class="inline-block bg-green-500 text-white px-4 py-2 rounded mb-2">
+               class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg mb-2 hover:bg-green-600 transition">
                Join Live Class
             </a>
         {% empty %}
@@ -86,18 +86,20 @@
     <!-- VIDEOS -->
     <!-- ========================= -->
 
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-        <h3 class="text-xl font-semibold mb-3">Course Videos</h3>
+    <div class="bg-white p-5 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">📺 Course Videos</h3>
 
-        <div class="grid md:grid-cols-2 gap-4">
+        <div class="grid md:grid-cols-2 gap-5">
 
         {% for video in videos %}
-            <div class="border p-3 rounded">
-                <p class="font-medium">{{ video.title }}</p>
+            <div class="border p-3 rounded-lg hover:shadow-md transition">
 
-                <video controls class="w-full mt-2" preload="metadata">
-                    <source src="{{ video.video.url }}">
+                <p class="font-medium text-gray-800">{{ video.title }}</p>
+
+                <video controls preload="metadata" class="w-full mt-3 rounded">
+                    <source src="{{ video.video_file.url }}">
                 </video>
+
             </div>
         {% empty %}
             <p>No videos available</p>
@@ -111,22 +113,24 @@
     <!-- MATERIALS -->
     <!-- ========================= -->
 
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-        <h3 class="text-xl font-semibold mb-3">Course Notes</h3>
+    <div class="bg-white p-5 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">📚 Course Notes</h3>
 
         {% for material in materials %}
-            <div class="flex justify-between items-center border-b py-2">
+            <div class="flex justify-between items-center border-b py-3">
 
-                <span>{{ material.title }}</span>
+                <span class="text-gray-700">{{ material.title }}</span>
 
-                <a href="{% url 'view_material' material.id %}"
-                    class="text-blue-600 underline">
-                    View
+                <!-- ⚡ FAST DIRECT ACCESS -->
+                <a href="{{ material.file.url }}"
+                    target="_blank"
+                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition text-sm">
+                    Open
                 </a>
 
             </div>
         {% empty %}
-            <p>No materials uploaded yet.</p>
+            <p class="text-gray-500">No materials uploaded yet.</p>
         {% endfor %}
     </div>
 
@@ -135,30 +139,30 @@
     <!-- EXAMS -->
     <!-- ========================= -->
 
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-        <h3 class="text-xl font-semibold mb-3">Course Exams</h3>
+    <div class="bg-white p-5 rounded-xl shadow mb-6">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">📝 Course Exams</h3>
 
         {% for exam in course.exam_set.all %}
-            <div class="flex justify-between items-center border-b py-2">
+            <div class="flex justify-between items-center border-b py-3">
 
-                <span>{{ exam.title }}</span>
+                <span class="text-gray-700">{{ exam.title }}</span>
 
                 <a href="{% url 'take_exam' exam.id %}"
-                   class="bg-blue-600 text-white px-3 py-1 rounded">
+                   class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm">
                    Take Exam
                 </a>
 
             </div>
         {% empty %}
-            <p>No exams created yet.</p>
+            <p class="text-gray-500">No exams created yet.</p>
         {% endfor %}
     </div>
 
 
     <!-- BACK BUTTON -->
-    <div class="text-center">
+    <div class="text-center mt-6">
         <a href="javascript:history.back()"
-           class="text-blue-600 underline">
+           class="text-blue-600 hover:underline font-medium">
            ← Back
         </a>
     </div>
