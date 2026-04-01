@@ -31,8 +31,8 @@
 
 <strong>{{ material.title }}</strong>
 
-<a href="{% url 'view_material' material.id %}">
-<button>Open Notes</button>
+<a href="{{ material.file.url }}" target="_blank">
+    <button>Open Notes</button>
 </a>
 
 </div>

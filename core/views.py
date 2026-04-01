@@ -262,7 +262,7 @@ def upload_video(request, course_id):
         Video.objects.create(
             course=course,
             title=request.POST.get("title"),
-            video=request.FILES.get("video")
+            video_file=request.FILES.get("video")  # ✅ FIXED
         )
         return redirect("course_detail", course_id=course.id)
 
