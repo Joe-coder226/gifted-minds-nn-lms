@@ -133,24 +133,20 @@ def admin_dashboard(request):
 # ======================================
 # COURSE DETAIL (BOTH ADMIN & STUDENT)
 # ======================================
-@login_required
+from django.shortcuts import get_object_or_404, render
+
 def course_detail(request, course_id):
-
-    course = get_object_or_404(Course, id=course_id)
-
-    videos = Video.objects.filter(course=course)
-    materials = CourseMaterial.objects.filter(course=course)
-    exams = Exam.objects.filter(course=course)
-    live_sessions = LiveSession.objects.filter(course=course, is_active=True)
-    attendance_session = AttendanceSession.objects.filter(course=course, is_active=True).first()
+    course = get_object_or_404(
+        Course.objects.prefetch_related('videos', 'materials', 'exams', 'live_sessions'),
+        id=course_id
+    )
 
     return render(request, "core/course_detail.html", {
         "course": course,
-        "videos": videos,
-        "materials": materials,
-        "exams": exams,
-        "live_sessions": live_sessions,
-        "attendance_session": attendance_session
+        "videos": course.videos.all(),
+        "materials": course.materials.all(),
+        "exams": course.exams.all(),
+        "live_sessions": course.live_sessions.all(),
     })
 
 

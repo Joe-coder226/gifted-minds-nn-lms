@@ -7,11 +7,9 @@
 
     <h2>{{ video.title }}</h2>
 
-    <video width="700" controls>
-        <source src="{{ video.video.url }}">
-        Your browser does not support video playback.
+    <video width="600" controls preload="metadata">
+        <source src="{{ video.video_file.url }}" type="video/mp4">
     </video>
-
     <br><br>
 
     <a href="javascript:history.back()">⬅ Back</a>
