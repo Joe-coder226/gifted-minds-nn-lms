@@ -62,7 +62,11 @@ class Course(models.Model):
 # COURSE MATERIALS
 # =========================
 class CourseMaterial(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name='materials'   # ✅ FIX
+    )
     title = models.CharField(max_length=200)
     file = models.FileField(upload_to='course_materials/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -123,7 +127,11 @@ class Subscription(models.Model):
 # EXAMS
 # =========================
 class Exam(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name='exams'   # ✅ FIX
+    )
     title = models.CharField(max_length=200)
     total_marks = models.IntegerField(default=0)
     duration_minutes = models.IntegerField(default=30)
@@ -160,7 +168,11 @@ class StudentExam(models.Model):
 # LIVE SESSION
 # =========================
 class LiveSession(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name='live_sessions'   # ✅ FIX
+    )
     title = models.CharField(max_length=200)
     room_name = models.CharField(max_length=200, unique=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
