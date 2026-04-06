@@ -1,18 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ video.title }}</title>
-</head>
-<body>
+<div class="max-w-5xl mx-auto">
 
-    <h2>{{ video.title }}</h2>
+    <div class="card">
+        <h2 class="text-xl font-bold mb-3">
+            <i class="fas fa-play-circle"></i> {{ video.title }}
+        </h2>
 
-    <video width="600" controls preload="metadata">
-        <source src="{{ video.video_file.url }}" type="video/mp4">
-    </video>
-    <br><br>
+        <video controls class="w-full rounded" preload="metadata">
+            <source src="{{ video.video_file.url }}">
+        </video>
+    </div>
 
-    <a href="javascript:history.back()">⬅ Back</a>
+    <!-- Related Videos -->
+    <div class="card mt-4">
+        <h3 class="section-title">
+            <i class="fas fa-list"></i> Other Videos
+        </h3>
 
-</body>
-</html>
+        {% for v in video.course.videos.all %}
+            <a href="{% url 'watch_video' v.id %}" class="block py-2 hover:underline">
+                ▶ {{ v.title }}
+            </a>
+        {% endfor %}
+    </div>
+
+</div>

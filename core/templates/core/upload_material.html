@@ -1,54 +1,21 @@
-{% extends "core/base.html" %}
-{% block content %}
+<div class="max-w-xl mx-auto card">
 
-<div class="max-w-xl mx-auto mt-10">
+    <h2 class="section-title">
+        <i class="fas fa-upload"></i> Upload Material
+    </h2>
 
-    <div class="bg-white p-6 rounded-xl shadow">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
-        <h4 class="text-xl font-bold mb-4">
-            Upload Material for {{ course.title }}
-        </h4>
+        <input type="text" name="title" placeholder="Title"
+               class="w-full border p-2 rounded mb-3">
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+        <input type="file" name="file"
+               class="w-full border p-2 rounded mb-3">
 
-            <!-- TITLE -->
-            <div class="mb-4">
-                <label class="block font-medium mb-1">Material Title</label>
-                <input type="text"
-                       name="title"
-                       class="w-full border rounded px-3 py-2"
-                       placeholder="e.g. Biology Notes - Topic 1"
-                       required>
-            </div>
-
-            <!-- FILE -->
-            <div class="mb-4">
-                <label class="block font-medium mb-1">
-                    Upload File (PDF, DOCX, PPT)
-                </label>
-
-                <input type="file"
-                       name="file"
-                       class="w-full border rounded px-3 py-2"
-                       accept=".pdf,.doc,.docx,.ppt,.pptx"
-                       required>
-
-                <p class="text-sm text-gray-500 mt-1">
-                    Supported: PDF, Word, PowerPoint
-                </p>
-            </div>
-
-            <!-- BUTTON -->
-            <button type="submit"
-                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Upload Material
-            </button>
-
-        </form>
-
-    </div>
+        <button class="btn btn-primary">
+            <i class="fas fa-cloud-upload-alt"></i> Upload
+        </button>
+    </form>
 
 </div>
-
-{% endblock %}

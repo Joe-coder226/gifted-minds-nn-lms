@@ -1,16 +1,21 @@
-<h2>Upload Video for {{ course.title }}</h2>
+<div class="max-w-xl mx-auto card">
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+    <h2 class="section-title">
+        <i class="fas fa-video"></i> Upload Video
+    </h2>
 
-    <input type="text" name="title" placeholder="Video Title" required>
-    <br><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
-    <input type="file" name="video" required>
-    <br><br>
+        <input type="text" name="title" placeholder="Video Title"
+               class="w-full border p-2 rounded mb-3">
 
-    <button type="submit">Upload Video</button>
+        <input type="file" name="video"
+               class="w-full border p-2 rounded mb-3">
 
-</form>
+        <button class="btn btn-purple">
+            <i class="fas fa-upload"></i> Upload Video
+        </button>
+    </form>
 
-<a href="{% url 'course_detail' course.id %}">Back</a>
+</div>

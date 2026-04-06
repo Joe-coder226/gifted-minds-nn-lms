@@ -1,25 +1,25 @@
-{% extends "core/base.html" %}
-{% block content %}
+<div class="max-w-6xl mx-auto">
 
-<h1>My Courses</h1>
+    <h1 class="text-2xl font-bold mb-4">
+        <i class="fas fa-graduation-cap"></i> My Courses
+    </h1>
 
-{% for course in courses %}
+    <div class="grid md:grid-cols-3 gap-4">
 
-<div style="border:1px solid #ccc; padding:15px; margin-bottom:10px;">
+        {% for course in courses %}
+        <div class="card hover:shadow-lg transition">
 
-    <h2>{{ course.title }}</h2>
-    <p>{{ course.description }}</p>
+            <h3 class="font-bold">{{ course.title }}</h3>
+            <p class="text-sm text-gray-500">{{ course.grade }}</p>
 
-    <a href="{% url 'student_course' course.id %}">
-        <button>Open Course</button>
-    </a>
+            <a href="{% url 'course_detail' course.id %}"
+               class="btn btn-primary mt-3">
+               <i class="fas fa-arrow-right"></i> Enter
+            </a>
+
+        </div>
+        {% endfor %}
+
+    </div>
 
 </div>
-
-{% empty %}
-
-<p>No courses available</p>
-
-{% endfor %}
-
-{% endblock %}
