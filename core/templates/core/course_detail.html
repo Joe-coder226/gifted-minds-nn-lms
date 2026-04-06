@@ -119,18 +119,17 @@
         {% for material in materials %}
             <div class="flex justify-between items-center border-b py-3">
 
-                <span class="text-gray-700">{{ material.title }}</span>
-
-                <!-- ⚡ FAST DIRECT ACCESS -->
                 <a href="{{ material.file.url }}"
                     target="_blank"
-                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition text-sm">
-                    Open
+                    class="text-blue-600 hover:underline font-medium">
+                    <i class="fas fa-file-pdf"></i> {{ material.title }}
                 </a>
 
+                <span class="text-sm text-gray-400">
+                    {{ material.uploaded_at|date:"M d, Y" }}
+                </span>
+
             </div>
-        {% empty %}
-            <p class="text-gray-500">No materials uploaded yet.</p>
         {% endfor %}
     </div>
 
