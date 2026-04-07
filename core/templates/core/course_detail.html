@@ -132,30 +132,6 @@
             </div>
         {% endfor %}
     </div>
-
-
-    <!-- ========================= -->
-<!-- EXAMS -->
-<!-- ========================= -->
-
-<div class="bg-white p-5 rounded-xl shadow mb-6">
-    <h3 class="text-xl font-semibold mb-4 text-gray-800">📝 Course Exams</h3>
-
-    {% for exam in exams %}
-        <div class="flex justify-between items-center border-b py-3">
-
-            <span class="text-gray-700">📝 {{ exam.title }}</span>
-
-            <a href="{% url 'take_exam' exam.id %}"
-               class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm">
-               Take Exam
-            </a>
-
-        </div>
-    {% empty %}
-        <p class="text-gray-500">No exams created yet.</p>
-    {% endfor %}
-</div>
     <!-- ========================= -->
     <!-- EXAMS -->
     <!-- ========================= -->
