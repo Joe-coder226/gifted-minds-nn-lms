@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+
+    <h2 class="text-xl font-bold mb-4">Create Exam</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="title" placeholder="Exam Title"
+               class="w-full border p-2 rounded mb-3">
+
+        <input type="number" name="duration" placeholder="Duration (minutes)"
+               class="w-full border p-2 rounded mb-3">
+
+        <button class="bg-blue-600 text-white px-4 py-2 rounded">
+            Create Exam
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

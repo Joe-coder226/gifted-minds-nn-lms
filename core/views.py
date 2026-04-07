@@ -385,6 +385,33 @@ def student_attendance(request):
 # ======================================
 # EXAMS
 # ======================================
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Course, Exam
+
+@login_required
+def create_exam(request, course_id):
+
+    if not request.user.is_staff:
+        return redirect("student_dashboard")
+
+    course = get_object_or_404(Course, id=course_id)
+
+    if request.method == "POST":
+        title = request.POST.get("title")
+        duration = request.POST.get("duration")
+
+        Exam.objects.create(
+            course=course,
+            title=title,
+            duration_minutes=duration
+        )
+
+        return redirect("course_detail", course_id=course.id)
+
+    return render(request, "core/create_exam.html", {"course": course})
+
+
 @login_required
 def take_exam(request, exam_id):
 

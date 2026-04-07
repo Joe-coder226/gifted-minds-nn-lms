@@ -29,17 +29,17 @@
         <div class="flex flex-wrap gap-3">
 
             <a href="{% url 'upload_material' course.id %}"
-               class="bg-blue-600 text-blue px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+               class="bg-blue-600 text-green px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                📚 Upload Notes
             </a>
 
             <a href="{% url 'upload_video' course.id %}"
-               class="bg-purple-600 text-blue px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+               class="bg-purple-600 text-green px-4 py-2 rounded-lg hover:bg-purple-700 transition">
                🎥 Upload Video
             </a>
 
             <a href="{% url 'create_live_session' course.id %}"
-               class="bg-green-600 text-blue px-4 py-2 rounded-lg hover:bg-green-700 transition">
+               class="bg-green-600 text-green px-4 py-2 rounded-lg hover:bg-green-700 transition">
                🔴 Start Live Class
             </a>
 
@@ -73,7 +73,7 @@
 
         {% for live in live_sessions %}
             <a href="{% url 'live_session_room' live.id %}"
-               class="inline-block bg-green-500 text-white px-4 py-2 rounded-lg mb-2 hover:bg-green-600 transition">
+               class="inline-block bg-green-500 text-green px-4 py-2 rounded-lg mb-2 hover:bg-green-600 transition">
                Join Live Class
             </a>
         {% empty %}

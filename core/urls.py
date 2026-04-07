@@ -34,6 +34,7 @@ urlpatterns = [
     path('my-attendance/', views.student_attendance, name='student_attendance'),
 
     # EXAMS
+    path('course/<int:course_id>/create-exam/', views.create_exam, name='create_exam'),
     path('exam/<int:exam_id>/', views.take_exam, name='take_exam'),
     path('exam/<int:exam_id>/add-question/', views.add_question, name='add_question'),
 

@@ -183,11 +183,9 @@ Delete Course
 </a>
 
 <!-- CREATE EXAM BUTTON -->
-<button class="btn btn-sm btn-success w-100 mb-2"
-data-bs-toggle="collapse"
-data-bs-target="#examForm{{ course.id }}">
-Create Exam
-</button>
+<a href="{% url 'create_exam' course.id %}">
+    Create Exam
+</a>
 
 <!-- EXAM FORM COLLAPSE -->
 <div class="collapse mt-2" id="examForm{{ course.id }}">
