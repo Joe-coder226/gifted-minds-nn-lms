@@ -29,17 +29,17 @@
         <div class="flex flex-wrap gap-3">
 
             <a href="{% url 'upload_material' course.id %}"
-               class="bg-blue-600 text-green px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+               class="bg-blue-600 text-blue-100 border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-700">
                📚 Upload Notes
             </a>
 
             <a href="{% url 'upload_video' course.id %}"
-               class="bg-purple-600 text-green px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+               class="bg-blue-600 text-blue-100 border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-700">
                🎥 Upload Video
             </a>
 
             <a href="{% url 'create_live_session' course.id %}"
-               class="bg-green-600 text-green px-4 py-2 rounded-lg hover:bg-green-700 transition">
+               class="bg-blue-600 text-blue-100 border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-700">
                🔴 Start Live Class
             </a>
 
@@ -135,24 +135,46 @@
 
 
     <!-- ========================= -->
+<!-- EXAMS -->
+<!-- ========================= -->
+
+<div class="bg-white p-5 rounded-xl shadow mb-6">
+    <h3 class="text-xl font-semibold mb-4 text-gray-800">📝 Course Exams</h3>
+
+    {% for exam in exams %}
+        <div class="flex justify-between items-center border-b py-3">
+
+            <span class="text-gray-700">📝 {{ exam.title }}</span>
+
+            <a href="{% url 'take_exam' exam.id %}"
+               class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm">
+               Take Exam
+            </a>
+
+        </div>
+    {% empty %}
+        <p class="text-gray-500">No exams created yet.</p>
+    {% endfor %}
+</div>
+    <!-- ========================= -->
     <!-- EXAMS -->
     <!-- ========================= -->
 
     <div class="bg-white p-5 rounded-xl shadow mb-6">
         <h3 class="text-xl font-semibold mb-4 text-gray-800">📝 Course Exams</h3>
 
-        {% for exam in course.exam_set.all %}
+        {% for exam in exams %}
             <div class="flex justify-between items-center border-b py-3">
 
-                <span class="text-gray-700">{{ exam.title }}</span>
+                <span class="text-gray-700">📝 {{ exam.title }}</span>
 
                 <a href="{% url 'take_exam' exam.id %}"
-                   class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm">
-                   Take Exam
+                    class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm">
+                    Take Exam
                 </a>
 
             </div>
-        {% empty %}
+            {% empty %}
             <p class="text-gray-500">No exams created yet.</p>
         {% endfor %}
     </div>
